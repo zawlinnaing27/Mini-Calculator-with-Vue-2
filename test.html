@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <label for="message"  >Name</label><br>
+       <input type="text"  placeholder="this is test" v-model="pizza.name">
+       <small style="color: red;" v-if="validation.nameStatus == true">Pizza Name is required</small> <br>
+       <input type="number"  placeholder="this is test" v-model="pizza.price">
+       <small style="color: red;" v-if="validation.priceStatus == true">Pizza price is required</small> <br>
+      <button @click="create()">Add</button>
+<hr>
+
+
+     <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in items">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+        </tbody>
+     </table>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+         pizza : {
+            name: '',
+            price:''
+         },
+        items: [],
+        validation : {
+                nameStatus :false,
+                priceStatus : false,
+        }
+           },
+           methods : {
+             create(){
+                this.validationCheck();
+
+            //    if(this.pizza.name == ''){
+            //         this.validation.nameStatus = true
+            //    }else{
+            //     this.validation.nameStatus = false
+            //    }
+           
+
+            //    if(this.pizza.price == ''){
+            //         this.validation.priceStatus = true
+            //    }else{
+            //     this.validation.priceStatus = false
+            //    }
+
+               if(!this.validation.nameStatus && !this.validation.priceStatus){
+                this.items.push({
+                   id : this.items.length + 1 ,
+                   name: this.pizza.name ,
+                   price: this.pizza.price ,
+               })
+               this.clear();
+               }
+              
+             },
+             validationCheck(){
+                this.validation.nameStatus = this.pizza.name == '' ? true : false;
+                this.validation.priceStatus = this.pizza.price == '' ? true : false;
+             },
+             clear(){
+                this.pizza.name = '';
+               this.pizza.price = '';
+             }
+           }
+    })
+</script>
+</html>
